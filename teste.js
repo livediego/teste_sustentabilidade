@@ -32,11 +32,11 @@ async function marcarTodosSelecionaveis(page) {
 }
 
 const empresas = [
-  { razao: "Empresa Alpha LTDA", cnpj: "12345678000101", email: "alpha@email.com", responsavel: "Neymar Jr.", cargo: "Sócio" },
-  { razao: "Empresa Beta ME", cnpj: "23456789000102", email: "beta@email.com", responsavel: "Lionel Messi", cargo: "Diretor" },
-  { razao: "Empresa Gama EIRELI", cnpj: "34567890000103", email: "gama@email.com", responsavel: "Cristiano Ronaldo", cargo: "Gerente" },
-  { razao: "Empresa Delta SA", cnpj: "45678901000104", email: "delta@email.com", responsavel: "Kylian Mbappé", cargo: "Coordenador" },
-  { razao: "Empresa Épsilon LTDA", cnpj: "56789012000105", email: "epsilon@email.com", responsavel: "Erling Haaland", cargo: "Analista" }
+  { nome: "Empresa Alpha", razao: "Empresa Alpha LTDA", cnpj: "12345678000101", email: "alpha@email.com", cidade: "Santos", estado: "SP", responsavel: "Neymar Jr.", cargo: "Sócio", tamanho: "Pequena", area: "Inovação, digitalização, conhecimento, gestão da informação" },
+  { nome: "Empresa Beta", razao: "Empresa Beta ME", cnpj: "23456789000102", email: "beta@email.com", cidade: "São Paulo", estado: "SP", responsavel: "Lionel Messi", cargo: "Diretor", tamanho: "Média", area: "Serviços, turismo, software, segurança, assessoria, transporte, comércio" },
+  { nome: "Empresa Gama", razao: "Empresa Gama EIRELI", cnpj: "34567890000103", email: "gama@email.com", cidade: "Rio de Janeiro", estado: "RJ", responsavel: "Cristiano Ronaldo", cargo: "Gerente", tamanho: "Grande", area: "Industrial, agroindústria, manufatureira, processadora, artesanal, farmacêutica" },
+  { nome: "Empresa Delta", razao: "Empresa Delta SA", cnpj: "45678901000104", email: "delta@email.com", cidade: "Brasília", estado: "DF", responsavel: "Kylian Mbappé", cargo: "Coordenador", tamanho: "Micro", area: "Agrícola, pecuária, pesqueira, mineradora, florestal" },
+  { nome: "Empresa Épsilon", razao: "Empresa Épsilon LTDA", cnpj: "56789012000105", email: "epsilon@email.com", cidade: "Salvador", estado: "BA", responsavel: "Erling Haaland", cargo: "Analista", tamanho: "Pequena", area: "Outro" }
 ];
 
 const run = async () => {
@@ -61,8 +61,8 @@ const run = async () => {
       dialog.dismiss().catch(() => { });
     });
     //Etapa 1
-    await page.getByRole('textbox', { name: 'Nome da Empresa *' }).fill(empresa.razao);
-    await page.getByRole('textbox', { name: 'Razão Social' }).fill(empresa.razao + ' LTDA');
+    await page.getByRole('textbox', { name: 'Nome da Empresa *' }).fill(empresa.nome);
+    await page.getByRole('textbox', { name: 'Razão Social' }).fill(empresa.razao);
     await page.getByRole('textbox', { name: 'Data de Fundação' }).fill('2026-01-01');
     await page.getByRole('textbox', { name: 'Endereço' }).fill('Endereço');
     await page.getByRole('textbox', { name: 'Telefone' }).fill('telefone');
@@ -71,9 +71,12 @@ const run = async () => {
     await page.getByRole('textbox', { name: 'País' }).fill('Brasil');
     await page.getByRole('textbox', { name: 'E-mail' }).fill(empresa.email);
     await page.getByRole('combobox').first().click();
-    await page.getByRole('option', { name: 'Micro' }).click();
+    await page.getByRole('option', { name: empresa.tamanho }).click();
     await page.getByRole('combobox').nth(1).click();
-    await page.getByRole('option', { name: 'Outro' }).click();
+    await page.getByRole('option', { name: empresa.area }).click();
+    if (empresa.area === 'Outro') {
+      await page.getByRole('textbox', { name: 'Informe o Setor *' }).fill("Apostas esportivas");
+    }
     await page.getByRole('textbox', { name: 'Nome Completo *' }).fill(empresa.responsavel);
     await page.getByRole('textbox', { name: 'Cargo' }).fill(empresa.cargo);
     await page.getByRole('combobox').nth(2).click();
@@ -173,7 +176,7 @@ const run = async () => {
   console.log('🌐 Conexão restaurada');
 
   // Espera na tela sem fechar
-  //await page.waitForTimeout(99999999);
+  await page.waitForTimeout(100000);
   if (browser) await browser.close();
 
 };
