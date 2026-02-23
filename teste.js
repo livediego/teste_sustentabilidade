@@ -32,11 +32,11 @@ async function marcarTodosSelecionaveis(page) {
 }
 
 const empresas = [
-  { razao: "Empresa Alpha LTDA", cnpj: "12345678000101", email: "alpha@email.com" },
-  { razao: "Empresa Beta ME", cnpj: "23456789000102", email: "beta@email.com" },
-  { razao: "Empresa Gama EIRELI", cnpj: "34567890000103", email: "gama@email.com" },
-  { razao: "Empresa Delta SA", cnpj: "45678901000104", email: "delta@email.com" },
-  { razao: "Empresa Épsilon LTDA", cnpj: "56789012000105", email: "epsilon@email.com" }
+  { razao: "Empresa Alpha LTDA", cnpj: "12345678000101", email: "alpha@email.com", responsavel: "Neymar Jr.", cargo: "Sócio" },
+  { razao: "Empresa Beta ME", cnpj: "23456789000102", email: "beta@email.com", responsavel: "Lionel Messi", cargo: "Diretor" },
+  { razao: "Empresa Gama EIRELI", cnpj: "34567890000103", email: "gama@email.com", responsavel: "Cristiano Ronaldo", cargo: "Gerente" },
+  { razao: "Empresa Delta SA", cnpj: "45678901000104", email: "delta@email.com" , responsavel: "Kylian Mbappé", cargo: "Coordenador"},
+  { razao: "Empresa Épsilon LTDA", cnpj: "56789012000105", email: "epsilon@email.com", responsavel: "Erling Haaland", cargo: "Analista" }
 ];
 
 const run = async () => {
@@ -74,8 +74,8 @@ const run = async () => {
     await page.getByRole('option', { name: 'Micro' }).click();
     await page.getByRole('combobox').nth(1).click();
     await page.getByRole('option', { name: 'Outro' }).click();
-    await page.getByRole('textbox', { name: 'Nome Completo *' }).fill('Diego de Oliveira Machado');
-    await page.getByRole('textbox', { name: 'Cargo' }).fill('Sócio');
+    await page.getByRole('textbox', { name: 'Nome Completo *' }).fill(empresa.responsavel);
+    await page.getByRole('textbox', { name: 'Cargo' }).fill(empresa.cargo);
     await page.getByRole('combobox').nth(2).click();
     await page.getByRole('option', { name: 'Masculino' }).click();
     await page.getByRole('combobox').nth(3).click();
