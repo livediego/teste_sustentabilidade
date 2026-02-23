@@ -1,0 +1,14 @@
+{
+  "name": "teste-sustentabilidade",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  },
+  "dependencies": {
+    "playwright": "^1.58.2"
+  }
+}
